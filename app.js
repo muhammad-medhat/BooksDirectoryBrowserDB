@@ -62,7 +62,7 @@ class UI{
         <td>${book.title}</td>
         <td>${book.author}</td>
         <td>${book.isbn}</td>
-        <td><a href='#' class='btn btn-danger btn-sm delete'><i class="far fa-trash-alt"></i></a></td>
+        <td><a href='#' class='btn btn-danger btn-sm delete'><i class="far fa-trash-alt delete"></i></a></td>
         `
         row.setAttribute('data-isbn', book.isbn)
         list.appendChild(row)
@@ -114,6 +114,9 @@ document.getElementById('book-form').addEventListener('submit', e=>{
 //Event: Remove Book
 document.getElementById('books-list').addEventListener('click', e=>{
     console.log(e.target)
-    UI.deleteBookFromList(e.target)
-    Store.deleteBook(e.target.closest('tr').getAttribute('data-isbn'))
+    if(e.target.classList.contains('delete')){
+        UI.deleteBookFromList(e.target)
+        Store.deleteBook(e.target.closest('tr').getAttribute('data-isbn'))
+    }
+
 })
