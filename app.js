@@ -1,5 +1,6 @@
-//Book class: representw the booko
+// const allBooks = Store.getBooks()
 
+//Book class: represents the book
 class Book{
     constructor(title, author, isbn){
         this.title = title
@@ -10,10 +11,14 @@ class Book{
 //Store class
 class Store{
     static getBooks(){
+
         let books=[]
         if(localStorage.getItem('books') === null){
-            books = []
+            books = booksList
+            //load default books
+            localStorage.setItem('books', books)
         } else {
+            console.log('loading books')
             books = JSON.parse(localStorage.getItem('books'))
         }
         return books
@@ -75,6 +80,63 @@ class UI{
             // el.parentElement.parentElement.remove()
         }
     }
+
+    static filterBooks(){
+            const searchCol = 0
+            // Declare variables
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("txtSearch");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("books-list");
+            tr = table.getElementsByTagName("tr");
+            Array.from(tr).forEach(r=>{
+                console.log(r)
+                if(r.cells[searchCol].textContent.startsWith(input.value, input.value.length)){
+                    console.log('===item found ===', r)
+                    r.style.display=''
+                } else{
+                    r.style.display='none'
+                }
+
+                // for(const td of r.children){
+                //     console.log(td);
+                //     if(td.textContent.startsWith(input.value, input.value.length)){
+                //         console.log('===item found ===', td)
+                //     }
+                // }
+            })
+
+            // // Loop through all table rows, and hide those who don't match the search query
+            //  for (i = 0; i < tr.length; i++) {
+                //  td = tr[i].getElementsByTagName("td")[0];
+                //  if (td) {
+                //  const txtValue = td.textContent || td.innerText;
+                //  if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    //  tr[i].style.display = "";
+                //  } else {
+                    //  tr[i].style.display = "none";
+                //  }
+            //  }
+
+
+            // const list = document.getElementById('books-list')
+            // for(const row of list.children) {
+    
+            //     const t = row.children[0].textContent.toLowerCase()
+    
+            //     if(!row.children[0].textContent.toLowerCase().startsWith(bookName.toLowerCase(), bookName.length)){
+            //         // console.log(row.children[0].textContent.toLowerCase());
+            //         console.log(row);   
+            //         // alert(row.style.display)         
+            //         row.style.display='none'
+            //     }  else{
+            //         //row.style.display='contents'
+            //         row.style.display=''
+            //     }     
+            // }
+        //}
+    }
+
     static showAlert(msg, className){
         const div = document.createElement('div')
         div.classList.add('alert', `alert-${className}`)
@@ -118,5 +180,12 @@ document.getElementById('books-list').addEventListener('click', e=>{
         UI.deleteBookFromList(e.target)
         Store.deleteBook(e.target.closest('tr').getAttribute('data-isbn'))
     }
-
 })
+
+
+document.getElementById('txtSearch').addEventListener('keypress', UI.filterBooks)
+// (e)=>{
+//     console.log(e.target.value)
+//     UI.filterBooks(e.target.value)
+
+// })
