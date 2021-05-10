@@ -11,12 +11,13 @@ class Book{
 //Store class
 class Store{
     static getBooks(){
-
+        console.log(localStorage['books'])
         let books=[]
         if(localStorage.getItem('books') === null){
             books = booksList
+            console.log(books)
             //load default books
-            localStorage.setItem('books', books)
+            localStorage.setItem('books', JSON.stringify(books))
         } else {
             console.log('loading books')
             books = JSON.parse(localStorage.getItem('books'))
