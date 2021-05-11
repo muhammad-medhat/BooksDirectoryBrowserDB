@@ -81,6 +81,22 @@ class UI{
             // el.parentElement.parentElement.remove()
         }
     }
+    static filter(filter, tbl){
+        // document.getElementById(tbl)
+        for (const r of tbl.rows){
+            console.log(r)
+           
+            const [rowString, upperFilter] = [r.innerText.toUpperCase(), filter.toUpperCase()]
+            console.log(rowString)
+            console.log(upperFilter )
+            if( rowString.indexOf(upperFilter) == -1 ){
+                r.classList.add('hide')
+            } else {
+                r.classList.remove('hide')
+            }
+        }
+        // const tr = 
+    }
 
     static filterBooks(){
             const searchCol = 0
@@ -184,9 +200,9 @@ document.getElementById('books-list').addEventListener('click', e=>{
 })
 
 
-document.getElementById('txtSearch').addEventListener('keypress', UI.filterBooks)
-// (e)=>{
-//     console.log(e.target.value)
-//     UI.filterBooks(e.target.value)
+document.getElementById('txtSearch').addEventListener('keypress', //UI.filterBooks)
+e=>{
+    console.log(e.target.value)
+    UI.filter(e.target.value, document.getElementById('books-list'))
 
-// })
+})
